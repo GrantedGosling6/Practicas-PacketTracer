@@ -1,0 +1,104 @@
+Switch 
+
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname Switch0
+Switch0(config)#interface range fa 0/1-5
+Switch0(config-if-range)#switchport mode access
+Switch0(config-if-range)#switchport access vlan10
+                                               ^
+% Invalid input detected at '^' marker.
+	
+Switch0(config-if-range)#switchport access vlan 10
+% Access VLAN does not exist. Creating vlan 10
+Switch0(config-if-range)#do show vlan
+
+
+Switch0(config-if-range)#
+Switch0(config-if-range)#
+Switch0(config-if-range)#
+Switch0(config-if-range)#
+Switch0(config-if-range)#interface range fast 0/6-10 
+Switch0(config-if-range)#switchport mode access
+Switch0(config-if-range)#switchport access vlan 20
+% Access VLAN does not exist. Creating vlan 20
+Switch0(config-if-range)#do show vlan 
+
+
+Switch0(config-vlan)#
+Switch0(config-vlan)#
+Switch0(config-vlan)#int range gi 0/1-2
+Switch0(config-if-range)#switchport mode trunk
+Switch0(config-if-range)#do copy run star
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+Switch0(config-if-range)#
+
+
+SETEAR VTP server
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname Switch1
+Switch1(config)#vtp domain ccna
+Changing VTP domain name from NULL to ccna
+Switch1(config)#vtp password cisco
+Setting device VLAN database password to cisco
+Switch1(config)#do copy run star
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+Switch1(config)#vtp mode server
+Device mode already VTP SERVER.
+Switch1(config)#do copy run star
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+Switch1(config)#vlan 10
+Switch1(config-vlan)#name kevin 
+Switch1(config-vlan)#int range fa0/1-5
+Switch1(config-if-range)#switchport mode access
+Switch1(config-if-range)#switchport access vlan 10
+Switch1(config-if-range)#int range gi0/1-2
+Switch1(config-if-range)#sw mode trunk 
+Switch1(config-if-range)#vlan 30
+Switch1(config-vlan)#name raul
+Switch1(config-vlan)#int range fa0/6-10
+Switch1(config-if-range)#sw mode access
+Switch1(config-if-range)#sw access vlan 30
+Switch1(config-if-range)#do show vlan
+
+
+
+
+SETEAR VTP cliente
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname switch2
+switch2(config)#vtp domain ccna
+Changing VTP domain name from NULL to ccna
+switch2(config)#vtp password cisco
+Setting device VLAN database password to cisco
+switch2(config)#vtp mode client
+Setting device to VTP CLIENT mode.
+switch2(config)#do copy run star
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+switch2(config)#
+switch2(config)#int range gi0/1-2
+switch2(config-if-range)#sw mode trunk
+switch2(config-if-range)#do copy run star
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+switch2(config-if-range)#int range fa0/1-5
+switch2(config-if-range)#sw mo access
+switch2(config-if-range)#sw acc vlan 10
+switch2(config-if-range)#int range fa0/6-10
+switch2(config-if-range)#sw mo acc
+switch2(config-if-range)#sw acc vlan 30
+switch2(config-if-range)#do copy run star
